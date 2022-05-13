@@ -7,6 +7,7 @@ import 'screens/connectscreen.dart';
 import 'screens/controlscreen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
   runApp(const MyApp());
 }
@@ -23,22 +24,24 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.robotoTextTheme(
           Theme.of(context).textTheme,
         ),
-        highlightColor: Colors.transparent,
+        highlightColor: Colors.blue,
         splashFactory: NoSplash.splashFactory,
       ),
-      home: null, // <============================= DEĞİŞECEK
+      home: const ConnectScreen(),
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/connectscreen':
             return PageTransition(
               child: const ConnectScreen(),
               type: PageTransitionType.fade,
+              duration: const Duration(milliseconds: 200),
               settings: settings,
             );
           case '/controlscreen':
             return PageTransition(
               child: const ControlScreen(),
               type: PageTransitionType.fade,
+              duration: const Duration(milliseconds: 200),
               settings: settings,
             );
           default:
