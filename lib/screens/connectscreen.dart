@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:rgb_bulb_app/database/methods.dart';
+import 'package:provider/provider.dart';
 import 'package:rgb_bulb_app/database/theme.dart';
 
+import '../database/mqtt.dart' as mqtt;
 import '../database/variables.dart';
 
 class ConnectScreen extends StatelessWidget {
@@ -163,11 +164,27 @@ class ConnectBox extends StatelessWidget {
                 ),
               ),
               InkWell(
-                onTap: () {
+                onTap: () async {
+                  dynamic state;
                   if (snapshot.data == true) {
-                    disconnectFromBulb();
+                    mqtt.disconnect();
+                    connectionController.add(false);
                   } else {
-                    connectToBulb();
+                    try {
+                      state = await mqtt.connect().timeout(
+                            const Duration(seconds: 5),
+                          );
+                    } catch (e) {
+                      state = false;
+                    }
+
+                    if (state == true) {
+                      mqtt.subscribeToTopic("bulb");
+                      connectionController.add(true);
+                    } else {
+                      connectionController.add(false);
+                    }
+                    connectionController.add(true);
                   }
                 },
                 child: Container(

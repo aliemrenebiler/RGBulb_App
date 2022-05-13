@@ -1,34 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'mqtt.dart' as mqtt;
 import 'variables.dart';
 
-Future connectToBulb() async {
-  // Try to connect
-
-  // If connected, connection control is true
-  if (true) {
-    connectionController.add(true);
-  } else {
-    connectionController.add(false);
-  }
-  // Get the bulb status (open/close)
-  statusController.add(false);
-}
-
-Future disconnectFromBulb() async {
-  // Try to connect
-
-  // If disconnected, status is false
-  if (true) {
-    connectionController.add(false);
-  } else {
-    connectionController.add(true);
-  }
-}
-
 Future turnOnBulb() async {
-  // Try to connect
-
+  mqtt.sendMessage("Color(0xffffffff)");
   // If disconnected, status is false
   if (true) {
     statusController.add(true);
@@ -48,7 +25,8 @@ Future turnOffBulb() async {
   }
 }
 
-changeColor(Color color) {
+changeColor(Color color) async {
   pickerColor = color;
+  mqtt.sendMessage(color.toString()); // Color(0xff48490c)
   print(color);
 }
