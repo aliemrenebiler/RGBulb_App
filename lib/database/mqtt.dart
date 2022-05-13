@@ -14,7 +14,7 @@ late MqttServerConnection connectionStatus;
 
 late StreamSubscription subscription;
 
-Future<bool> connect() async {
+Future connect() async {
   client = MqttServerClient(broker, "40");
   client.port = port;
   client.logging(on: true);
@@ -24,7 +24,6 @@ Future<bool> connect() async {
   // connection message
   final connMessage = MqttConnectMessage()
       .authenticateAs(username, password)
-      .keepAliveFor(60)
       .withWillTopic('willtopic')
       .withWillMessage('Will message')
       .startClean()
@@ -35,19 +34,7 @@ Future<bool> connect() async {
   try {
     await client.connect(username, password);
   } catch (e) {
-    print('Exception: $e');
     client.disconnect();
-  }
-
-  /// The client has a change notifier object(see the Observable class) which we then listen to to get
-  /// notifications of published updates to each subscribed topic.
-  subscription = client.updates!.listen(onMessage);
-
-  if (client.connectionStatus == MqttConnectionState.connected) {
-    print("MQTT is connected!");
-    return true;
-  } else {
-    return false;
   }
 }
 
@@ -56,26 +43,7 @@ void disconnect() {
   onDisconnected();
 }
 
-void onDisconnected() {
-  print("MQTT is disconnected!");
-}
-
-void onMessage(List<MqttReceivedMessage> event) {
-  final MqttPublishMessage recMess = event[0].payload as MqttPublishMessage;
-  var message = recMess.payload.message.buffer.asByteData(0);
-}
-
-void subscribeToTopic(String topic) {
-  if (connectionStatus == MqttConnectionState.connected) {
-    client.subscribe(topic, MqttQos.atMostOnce);
-  }
-}
-
-void unsubscribeFromTopic(String topic) {
-  if (connectionStatus == MqttConnectionState.connected) {
-    client.unsubscribe(topic);
-  }
-}
+void onDisconnected() {}
 
 void sendMessage(String content) {
   final MqttClientPayloadBuilder builder = MqttClientPayloadBuilder();

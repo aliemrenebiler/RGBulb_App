@@ -58,14 +58,67 @@ class TopHeader extends StatelessWidget {
       height: MediaQuery.of(context).size.height * 2 / 5,
       width: MediaQuery.of(context).size.width,
       alignment: Alignment.center,
-      child: Text(
-        "CONTROL THE BULB",
-        textAlign: TextAlign.center,
-        overflow: TextOverflow.ellipsis,
-        style: TextStyle(
-          color: headerColor1,
-          fontWeight: FontWeight.bold,
-          fontSize: headerSize,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            margin: const EdgeInsets.all(8),
+            child: Text(
+              "CONNECTION",
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: headerColor1,
+                fontWeight: FontWeight.bold,
+                fontSize: headerSize,
+              ),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: const [
+              GoBackButton(),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class GoBackButton extends StatelessWidget {
+  const GoBackButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        Navigator.pushReplacementNamed(context, '/connectscreen');
+      },
+      child: Container(
+        alignment: Alignment.center,
+        margin: const EdgeInsets.all(8),
+        padding: const EdgeInsets.only(right: 16, left: 16),
+        height: 40,
+        decoration: BoxDecoration(
+          color: appYellow,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Row(
+          children: [
+            Text(
+              "GO BACK",
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: appDarkGrey,
+                fontWeight: FontWeight.bold,
+                fontSize: textSize,
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -166,7 +219,7 @@ class SetBox extends StatelessWidget {
           Container(
             height: 50,
             margin: const EdgeInsets.all(8),
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             alignment: Alignment.bottomLeft,
             child: Text(
               "Current Color",
