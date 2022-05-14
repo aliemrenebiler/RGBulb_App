@@ -20,7 +20,5 @@ Future disconnectFromBulb() async {
 
 changeColor(Color color) async {
   pickerColor = color;
-  print(color.value.toRadixString(16).toUpperCase());
-  mqtt.sendMessage(
-      color.value.toRadixString(16).toUpperCase()); // Color(0xff48490c)
+  mqtt.sendMessage(color.value.toRadixString(16).toUpperCase());
 }
