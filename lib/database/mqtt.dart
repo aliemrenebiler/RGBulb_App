@@ -27,7 +27,7 @@ Future connect() async {
       .withWillTopic('willtopic')
       .withWillMessage('Will message')
       .startClean()
-      .withWillQos(MqttQos.atMostOnce);
+      .withWillQos(MqttQos.exactlyOnce);
   client.connectionMessage = connMessage;
 
   //baglanilan yer burasi
@@ -51,7 +51,7 @@ void sendMessage(String content) {
   builder.addString(content);
   client.publishMessage(
     "bulb",
-    MqttQos.atMostOnce,
+    MqttQos.exactlyOnce,
     builder.payload!,
     retain: false,
   );

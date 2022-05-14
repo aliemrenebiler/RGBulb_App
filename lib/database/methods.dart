@@ -18,17 +18,9 @@ Future disconnectFromBulb() async {
   connectionController.add(false);
 }
 
-Future turnOnBulb() async {
-  mqtt.sendMessage("Color(0xffffffff)");
-  statusController.add(true);
-}
-
-Future turnOffBulb() async {
-  mqtt.sendMessage("Color(0x00000000)");
-  statusController.add(false);
-}
-
 changeColor(Color color) async {
   pickerColor = color;
-  mqtt.sendMessage(color.toString()); // Color(0xff48490c)
+  print(color.value.toRadixString(16).toUpperCase());
+  mqtt.sendMessage(
+      color.value.toRadixString(16).toUpperCase()); // Color(0xff48490c)
 }
