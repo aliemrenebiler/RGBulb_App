@@ -20,5 +20,5 @@ Future disconnectFromBulb() async {
 
 changeColor(Color color) async {
   pickerColor = color;
-  mqtt.sendMessage('${color.red},${color.green},${color.blue}');
+  mqtt.sendMessage('{${color.red},${color.green},${color.blue}}');
 }
