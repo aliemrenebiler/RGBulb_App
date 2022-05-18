@@ -24,7 +24,21 @@ class ControlScreen extends StatelessWidget {
             const TopHeader(),
             Container(
               padding: const EdgeInsets.all(8),
-              child: const SetBox(),
+              child: Column(
+                children: [
+                  const OnOffBox(),
+                  StreamBuilder<Object>(
+                    stream: onOffStream,
+                    builder: (context, snapshot) {
+                      if (snapshot.data == true) {
+                        return const SetBox();
+                      } else {
+                        return Container();
+                      }
+                    },
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -104,6 +118,79 @@ class GoBackButton extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class OnOffBox extends StatelessWidget {
+  const OnOffBox({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      margin: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(18)),
+        color: bgColor2,
+      ),
+      child: StreamBuilder<Object>(
+        stream: onOffStream,
+        builder: (context, snapshot) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Container(
+                  margin: const EdgeInsets.all(8),
+                  child: Text(
+                    (snapshot.data == true) ? "Bulb is ON" : "Bulb is OFF",
+                    textAlign: TextAlign.left,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: headerColor1,
+                      fontWeight: FontWeight.bold,
+                      fontSize: textSize,
+                    ),
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () async {
+                  if (snapshot.data == true) {
+                    turnOffBulb();
+                  } else {
+                    turnOnBulb();
+                  }
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  margin: const EdgeInsets.all(8),
+                  padding: const EdgeInsets.only(right: 16, left: 16),
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: (snapshot.data == true) ? appRed : appYellow,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text(
+                    (snapshot.data == true) ? "TURN OFF" : "TURN ON",
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: (snapshot.data == true) ? appWhite : appDarkGrey,
+                      fontWeight: FontWeight.bold,
+                      fontSize: textSize,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
