@@ -4,6 +4,7 @@ An Android app to control our IoT RGB LED module.
 
 Collaborated with Emre Urcu, Enes Altıngemi and Kübra Tunç
 - https://github.com/emreurcu
+- https://github.com/ealtingemi
 - https://github.com/kubratunc
 
 ## Getting Started
