@@ -1,4 +1,4 @@
-# rgb_bulb_app
+# RGBulb App
 
 An Android app to control our IoT RGB LED module.
 
