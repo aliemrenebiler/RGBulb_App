@@ -1,8 +1,6 @@
-# RGBulb App
+# rgb_bulb_app
 
 An Android app to control our IoT RGB LED module.
-
-Collaborated with [Emre Urcu](https://github.com/emreurcu), [Enes Altıngemi](https://github.com/ealtingemi) and [Kübra Tunç](https://github.com/kubratunc).
 
 ## Getting Started
 
